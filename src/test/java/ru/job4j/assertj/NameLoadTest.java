@@ -27,7 +27,8 @@ public class NameLoadTest {
     @Test
     void whenNoSymbol() {
         NameLoad nameLoad = new NameLoad();
-        assertThatThrownBy(() -> nameLoad.parse("VasiliyIvanov"))
+        String[] names = {"VasiliyIvanov"};
+        assertThatThrownBy(() -> nameLoad.parse(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("the symbol");
     }
@@ -51,10 +52,10 @@ public class NameLoadTest {
     @Test
     void whenOk() {
         NameLoad nameLoad = new NameLoad();
-        nameLoad.parse("Vasiliy=Ivanov", "Ivan=Petrov");
+        nameLoad.parse("Vasiliy=Ivanov", "Vasiliy=Petrov", "Ivan=Ivanov");
         assertThat(nameLoad.getMap()).containsAllEntriesOf(Map.of(
-                "Vasiliy", "Ivanov",
-                "Ivan", "Petrov")
+                "Vasiliy", "Ivanov+Petrov",
+                "Ivan", "Ivanov")
         );
     }
 }
