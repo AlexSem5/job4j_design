@@ -22,8 +22,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
         if (count == capacity * LOAD_FACTOR) {
             expand();
         }
-        if (table[indexFor(hash(Objects.hashCode(key)))] == null) {
-            table[indexFor(hash(Objects.hashCode(key)))] = new MapEntry<>(key, value);
+        int index = indexFor(hash(Objects.hashCode(key)));
+        if (table[index] == null) {
+            table[index] = new MapEntry<>(key, value);
             modCount++;
             count++;
             result = true;
@@ -40,16 +41,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
-        MapEntry<K, V>[] tableNew = new MapEntry[capacity * 2];
-        while (iterator().hasNext()) {
-            K key = iterator().next();
-            MapEntry<K, V> oldEntry = table[indexFor(hash(Objects.hashCode(key)))];
-            capacity = capacity * 2;
-            MapEntry<K, V> newEntry = tableNew[indexFor(hash(Objects.hashCode(key)))];
-            capacity = capacity / 2;
-            newEntry = oldEntry;
-        }
         capacity = capacity * 2;
+        MapEntry<K, V>[] tableNew = new MapEntry[capacity];
+        for (int i = 0; i < table.length; i++) {
+            MapEntry<K, V> entry = table[i];
+            if (entry != null) {
+                tableNew[indexFor(hash(Objects.hashCode(entry.key)))] = entry;
+            }
+        }
         table = tableNew;
     }
 
