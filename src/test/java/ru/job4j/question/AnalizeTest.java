@@ -36,7 +36,6 @@ public class AnalizeTest {
         Set current = Set.of(u1, u3);
         assertThat(Analize.diff(previous, current)).isEqualTo(new Info(0, 0, 1));
     }
-/*
 
     @Test
     void whenOneAdded() {
@@ -47,9 +46,7 @@ public class AnalizeTest {
         Set current = Set.of(u1, u2, u3, new User(4, "D"));
         assertThat(Analize.diff(previous, current)).isEqualTo(new Info(1, 0, 0));
     }
-*/
 
-/*
     @Test
     void whenAllChanged() {
         User u1 = new User(1, "A");
@@ -59,5 +56,4 @@ public class AnalizeTest {
         Set current = Set.of(new User(1, "AA"), u2, new User(4, "D"));
         assertThat(Analize.diff(previous, current)).isEqualTo(new Info(1, 1, 1));
     }
-*/
 }
