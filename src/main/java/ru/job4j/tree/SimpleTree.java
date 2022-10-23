@@ -13,17 +13,15 @@ public class SimpleTree<E> implements Tree<E> {
     public boolean add(E parent, E child) {
         boolean rsl = false;
         Optional<Node<E>> father = findBy(parent);
+        Optional<Node<E>> son = findBy(child);
+        if (father.isPresent() && son.isPresent()) {
+            return false;
+        }
         if (father.isPresent()) {
             Node<E> fatherNode = father.get();
             List<Node<E>> list = fatherNode.children;
-            for (Node<E> node : list) {
-                if (Objects.equals(node.value, child)) {
-                    rsl = false;
-                    break;
-                }
-                rsl = true;
-            }
             list.add(new Node<>(child));
+            rsl = true;
         }
         return rsl;
     }
