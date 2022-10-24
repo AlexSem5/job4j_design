@@ -35,3 +35,25 @@ public class User {
         System.out.printf("User 2 - hashcode: %s, hash: %s, bucket: %s", hashCode2, hash2, bucket2);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
