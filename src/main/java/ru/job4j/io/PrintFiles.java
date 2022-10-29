@@ -31,7 +31,7 @@ public class PrintFiles implements FileVisitor<Path> {
 
 class Searching {
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get("c:\\projects");
+        Path start = Paths.get("c:\\projects\\job4j_design\\data");
         Files.walkFileTree(start, new PrintFiles());
     }
 }
