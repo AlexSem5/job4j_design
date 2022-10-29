@@ -13,9 +13,9 @@ import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class SearchFiles implements FileVisitor<Path> {
 
-    Predicate<Path> condition;
+    private Predicate<Path> condition;
 
-    List<Path> paths = new ArrayList<>();
+    private List<Path> paths = new ArrayList<>();
 
     public List<Path> getPaths() {
         return paths;
@@ -32,9 +32,8 @@ public class SearchFiles implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        Path path = file.toAbsolutePath();
-        if (condition.test(path)) {
-            paths.add(path);
+        if (condition.test(file)) {
+            paths.add(file);
         }
         return CONTINUE;
     }
