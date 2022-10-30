@@ -19,11 +19,11 @@ public class DuplicatesFinder {
         DuplicatesVisitor duplicatesVisitor = new DuplicatesVisitor();
         Files.walkFileTree(root, duplicatesVisitor);
         duplicatesVisitor.getMap().entrySet().stream()
-                .filter(filePropertyListEntry -> filePropertyListEntry.getValue().size() > 1)
-                .forEach(filePropertyListEntry -> {
-                    System.out.printf("%s - %dMB%n", filePropertyListEntry.getKey().getName(),
-                            filePropertyListEntry.getKey().getSize());
-                    filePropertyListEntry.getValue().forEach(System.out::println);
+                .filter(entry -> entry.getValue().size() > 1)
+                .forEach(entry -> {
+                    System.out.printf("%s - %dB%n", entry.getKey().getName(),
+                            entry.getKey().getSize());
+                    entry.getValue().forEach(System.out::println);
                 });
     }
 }
