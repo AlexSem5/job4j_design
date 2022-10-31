@@ -32,7 +32,7 @@ public class Search {
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
         }
-        if (args[1].length() <= 1 || !args[1].startsWith(".")) {
+        if (!args[1].matches("^[.][0-9a-z_]+$")) {
             throw new IllegalArgumentException(
                     String.format("incorrect file extension: %s ", args[1]));
         }
