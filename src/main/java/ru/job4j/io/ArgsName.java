@@ -61,14 +61,14 @@ public class ArgsName {
     /**
      * Метод осуществляет проверку массива строк на соответствие шаблону
      *
-     * @param args массив строк, описывающий параметры для работы с виртуальной машиной Javaaram args
+     * @param args массив строк, описывающий параметры для работы с виртуальной машиной Java
      */
     private static void validate(String[] args) {
         if (args.length == 0) {
             throw new IllegalArgumentException();
         }
         for (String arg : args) {
-            if (arg.isEmpty() || !arg.contains("=") || !arg.startsWith("-") || arg.charAt(2) == '='
+            if (arg.isEmpty() || !arg.contains("=") || !arg.startsWith("-") || arg.charAt(1) == '='
                 || (arg.endsWith("=") && arg.indexOf("=") == arg.length() - 1)) {
                 throw new IllegalArgumentException();
             }
