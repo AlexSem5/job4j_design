@@ -36,7 +36,7 @@ public class Zip {
                     String.format("incorrect file extension: %s ", extension));
         }
         String target = argsName.get("o");
-        if (!target.matches(".+[.].+")) {
+        if (!target.matches("^\\w+[.]zip$")) {
             throw new IllegalArgumentException(
                     String.format("incorrect target name: %s ", target));
         }
