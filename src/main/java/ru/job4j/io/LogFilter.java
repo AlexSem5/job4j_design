@@ -8,9 +8,8 @@ import java.util.stream.Collectors;
 
 public class LogFilter {
     public static List<String> filter(String file) {
-        List<String> list = null;
+        List<String> list = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-            list = new ArrayList<>();
             for (String line = in.readLine(); line != null; line = in.readLine()) {
                 String[] lines = line.split(" ");
                 if (lines[lines.length - 2].equals("404")) {
