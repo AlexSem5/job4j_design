@@ -42,25 +42,29 @@ public class ConsoleChat {
     public void run() {
         boolean run = true;
         List<String> list = new ArrayList<>();
+        boolean isRunning = true;
         while (run) {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
             list.add(input);
-            if (input.equals(STOP)) {
-                String input1 = scanner.nextLine();
-                while (!input1.equals(CONTINUE)) {
-                    list.add(input1);
-                }
-                list.add(input1);
+            if (isRunning && input.equals(STOP)) {
+                isRunning = false;
+                input = scanner.nextLine();
+                list.add(input);
             }
-            if (input.equals(OUT)) {
+            if (!isRunning && input.equals(CONTINUE)) {
+                isRunning = true;
+            }
+            if (isRunning && input.equals(OUT)) {
                 saveLog(list);
                 run = false;
                 continue;
             }
-            int index = (int) (Math.random() * readPhrases().size());
-            list.add(readPhrases().get(index));
-            System.out.println(readPhrases().get(index));
+            if (isRunning) {
+                int index = (int) (Math.random() * readPhrases().size());
+                list.add(readPhrases().get(index));
+                System.out.println(readPhrases().get(index));
+            }
         }
     }
 
