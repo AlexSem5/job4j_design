@@ -1,12 +1,9 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class ConsoleChat {
     /**
@@ -42,28 +39,29 @@ public class ConsoleChat {
     public void run() {
         boolean run = true;
         List<String> list = new ArrayList<>();
+        List<String> phrases = readPhrases();
         boolean isRunning = true;
         while (run) {
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
             list.add(input);
-            if (isRunning && input.equals(STOP)) {
+            if (isRunning && STOP.equals(input)) {
                 isRunning = false;
                 input = scanner.nextLine();
                 list.add(input);
             }
-            if (!isRunning && input.equals(CONTINUE)) {
+            if (!isRunning && CONTINUE.equals(input)) {
                 isRunning = true;
             }
-            if (isRunning && input.equals(OUT)) {
+            if (isRunning && OUT.equals(input)) {
                 saveLog(list);
                 run = false;
                 continue;
             }
             if (isRunning) {
-                int index = (int) (Math.random() * readPhrases().size());
-                list.add(readPhrases().get(index));
-                System.out.println(readPhrases().get(index));
+                int index = (int) (Math.random() * phrases.size());
+                list.add(phrases.get(index));
+                System.out.println(phrases.get(index));
             }
         }
     }
@@ -75,8 +73,8 @@ public class ConsoleChat {
      */
     private List<String> readPhrases() {
         List<String> list = new ArrayList<>();
-        try (BufferedReader read = new BufferedReader(new FileReader(botAnswers, Charset.forName("WINDOWS-1251")))) {
-            read.lines().map(s -> s + System.lineSeparator()).forEach(list::add);
+        try (BufferedReader read = new BufferedReader(new FileReader(botAnswers))) {
+            read.lines().forEach(list::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
