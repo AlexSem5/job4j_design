@@ -8,6 +8,11 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Класс описывает программу, которая осуществляет обход дерева директорий,
+ * включая вложенные директории, и ищет файлы по определённому предикату.
+ *
+ */
 public class Search {
     public static void main(String[] args) throws IOException {
         validate(args);
@@ -15,6 +20,13 @@ public class Search {
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
+    /**
+     * Для обхода дерева директорий используется класс SearchFiles.
+     * @param root начальная директория
+     * @param condition условие поиска файла
+     * @return коллекция, хранящая найденные файлы
+     * @throws IOException
+     */
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
