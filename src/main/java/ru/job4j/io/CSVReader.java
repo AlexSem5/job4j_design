@@ -1,9 +1,6 @@
 package ru.job4j.io;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,24 +28,27 @@ public class CSVReader {
      *                 типа ключ-значение
      */
     public static void handle(ArgsName argsName) {
-        List<String> filter = Arrays.asList(argsName.get("filter").split(","));
+        String[] filter = argsName.get("filter").split(",");
         List<Integer> indices = new ArrayList<>();
         try (Scanner scanner = new Scanner(new FileReader(argsName.get("path")));
-             PrintWriter writer = new PrintWriter(new FileWriter(argsName.get("out")))) {
+             PrintWriter writer = new PrintWriter(
+                     new BufferedWriter(new FileWriter(argsName.get("out"))))) {
             String delimiter = argsName.get("delimiter");
-            int index = 0;
-            while (scanner.hasNext()) {
-                String[] columns = scanner.nextLine().split(delimiter);
+            boolean isFirstLine = true;
+            while (scanner.hasNextLine()) {
+                List<String> columns = Arrays.asList(scanner.nextLine().split(delimiter));
                 StringJoiner joiner = new StringJoiner(delimiter);
-                for (int i = 0; i < columns.length; i++) {
-                    if (indices.contains(i)) {
-                        joiner.add(columns[i]);
+                if (isFirstLine) {
+                    for (var criteria : filter) {
+                        for (var column : columns) {
+                            if (Objects.equals(criteria, column)) {
+                                indices.add(columns.indexOf(column));
+                            }
+                        }
                     }
-                    if (filter.contains(columns[i])) {
-                        indices.add(index);
-                        joiner.add(columns[i]);
-                    }
-                    index++;
+                }
+                for (var index : indices) {
+                    joiner.add(columns.get(index));
                 }
                 if ("stdout".equals(argsName.get("out"))) {
                     System.out.println(joiner);
@@ -56,6 +56,7 @@ public class CSVReader {
                 if (!"stdout".equals(argsName.get("out"))) {
                     writer.println(joiner);
                 }
+                isFirstLine = false;
             }
         } catch (IOException e) {
             e.printStackTrace();
