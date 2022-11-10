@@ -15,7 +15,7 @@ public class UsageLog4j {
 		double f = 7.7E7;
 		boolean g = true;
 		char h = 'a';
-		LOG.debug("Primitive types: byte : {}, short : {}"
+		LOG.warn("Primitive types: byte : {}, short : {}"
 				  + ", int : {}, long : {}, float : {}, "
 				  + "double : {}, boolean : {}, char : {}",
 				a, b, c, d, e, f, g, h);
