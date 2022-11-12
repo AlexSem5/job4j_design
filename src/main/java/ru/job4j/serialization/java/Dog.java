@@ -39,6 +39,11 @@ public class Dog {
                + '}';
     }
     
+    /**
+     * JSON-строки используются для передачи информации между программами.
+     * Поэтому она будет передана как аргумент в конструктор или в метод.
+     * @param args
+     */
     public static void main(String[] args) {
         final Dog dog = new Dog(true, 5, new Collar(7), new String[] {"Ivan", "Vasiliy"});
         
