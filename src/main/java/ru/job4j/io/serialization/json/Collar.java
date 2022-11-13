@@ -1,4 +1,4 @@
-package ru.job4j.serialization.java;
+package ru.job4j.io.serialization.json;
 
 public class Collar {
     private final int size;
