@@ -6,7 +6,10 @@ import org.json.JSONObject;
  * Класс описывает преобразование (сериализация, сохранение) объекта в json-строку.
  * Note: Although we have a way to serialize a Java object to JSON string,
  * there is no way to convert it back using this library.
- * If we want that kind of flexibility, we can switch to other libraries such as Jackson.
+ * If we want that kind of flexibility, we can switch to other libraries such as Jackson(
+ * не всегда нужно преобразование в Java-объект, json-строка используется как входящая
+ * или исходящая информация в структурированном виде - набор пар "ключ":"значение".
+ * По ключу извлекаете значение и используете его).
  */
 public class JsonDog {
     public static void main(String[] args) {
