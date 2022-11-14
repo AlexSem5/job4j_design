@@ -66,4 +66,20 @@ public class Dog {
         final Dog dogMod = gson.fromJson(dogJson, Dog.class);
         System.out.println(dogMod);
     }
+    
+    public boolean isPet() {
+        return isPet;
+    }
+    
+    public int getWeight() {
+        return weight;
+    }
+    
+    public Collar getCollar() {
+        return collar;
+    }
+    
+    public String[] getDogFriends() {
+        return dogFriends;
+    }
 }

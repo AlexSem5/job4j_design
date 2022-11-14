@@ -12,4 +12,8 @@ public class Collar {
         return "Collar{"
                + "size=" + size + '}';
     }
+    
+    public int getSize() {
+        return size;
+    }
 }
