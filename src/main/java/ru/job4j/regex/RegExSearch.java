@@ -79,10 +79,10 @@ public class RegExSearch {
      * @param mask маска
      * @return регулярное выражение
      */
-    private static String maskToRegex(String mask) {
-        return mask.replace("*", "\\w*")
-                   .replace("?", "\\w")
-                   .replace(".", "[.]");
+    public static String maskToRegex(String mask) {
+        return mask.replace(".", "[.]")
+                   .replace("*", ".*")
+                   .replace("?", ".");
     }
     
     /**
@@ -92,7 +92,7 @@ public class RegExSearch {
      *                 типа ключ-значение
      */
     
-    private static void validate(NewArgsName argsName) {
+    public static boolean validate(NewArgsName argsName) {
         Path path = Paths.get(argsName.get("d"));
         if (!Files.exists(path)) {
             throw new IllegalArgumentException(String.format("Does not exist %s", path.toAbsolutePath()));
@@ -103,11 +103,7 @@ public class RegExSearch {
         if (!"mask".equals(argsName.get("t")) && !"name".equals(argsName.get("t")) && !"regex".equals(argsName.get("t"))) {
             throw new IllegalArgumentException("Search type should be either \"mask\" or \"name\" or \"regex\"");
         }
-        if (!argsName.get("n").matches("^.+[.].+$")) {
-            throw new IllegalArgumentException("Incorrect file type");
-        }
-        if ("name".equals(argsName.get("t"))
-            && !argsName.get("n").matches("^\\w+[.][0-9a-z_]+$")) {
+        if (!argsName.get("n").matches("^[\\w*?]+[.][*?0-9a-z_]+$")) {
             throw new IllegalArgumentException("Incorrect file name");
         }
         String target = argsName.get("o");
@@ -115,5 +111,6 @@ public class RegExSearch {
             throw new IllegalArgumentException(
                     String.format("incorrect target name: %s ", target));
         }
+        return true;
     }
 }
