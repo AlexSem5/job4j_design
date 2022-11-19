@@ -9,8 +9,8 @@ class RegExSearchTest {
     @Test
     void whenMaskToRegexTrue() {
         String convert = RegExSearch.maskToRegex("*?.txt?");
-        Boolean rsl = "okokokon.txtp".matches(convert);
-        assertThat(rsl).isTrue();
+        Boolean result = "okokokon.txtp".matches(convert);
+        assertThat(result).isTrue();
     }
     
     @Test
