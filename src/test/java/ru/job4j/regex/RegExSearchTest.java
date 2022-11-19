@@ -21,7 +21,7 @@ class RegExSearchTest {
     }
     
     @Test
-    void whenException() {
+    void whenExceptionIsThrown() {
         String[] args = {"-d=c:/", "-n=*|.?xt", "-t=mask", "-o=log.txt"};
         NewArgsName regEx = NewArgsName.of(args);
         assertThatThrownBy(() -> RegExSearch.validate(regEx))
