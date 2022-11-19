@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.*;
 class RegExSearchTest {
     
     @Test
-    void whenMaskToRegexTrue() {
+    void whenMaskToRegexIsTrue() {
         String convert = RegExSearch.maskToRegex("*?.txt?");
         Boolean result = "okokokon.txtp".matches(convert);
         assertThat(result).isTrue();
