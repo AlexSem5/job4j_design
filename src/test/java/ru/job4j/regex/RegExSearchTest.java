@@ -1,6 +1,9 @@
 package ru.job4j.regex;
 
-/*
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
+
 class RegExSearchTest {
     
     @Test
@@ -22,6 +25,7 @@ class RegExSearchTest {
         String[] args = {"-d=c:/", "-n=*|.?xt", "-t=mask", "-o=log.txt"};
         NewArgsName regEx = NewArgsName.of(args);
         assertThatThrownBy(() -> RegExSearch.validate(regEx))
-                .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Incorrect file name");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Incorrect file name");
     }
-}*/
+}
