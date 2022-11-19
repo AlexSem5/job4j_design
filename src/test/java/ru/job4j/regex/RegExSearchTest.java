@@ -5,12 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class RegExSearchTest {
-    
     @Test
-    void whenMaskToRegexIsTrue() {
+    void whenMaskToRegexTrue() {
         String convert = RegExSearch.maskToRegex("*?.txt?");
-        Boolean result = "okokokon.txtp".matches(convert);
-        assertThat(result).isTrue();
+        Boolean rsl = "okokokon.txtp".matches(convert);
+        assertThat(rsl).isTrue();
     }
     
     @Test
@@ -21,11 +20,10 @@ class RegExSearchTest {
     }
     
     @Test
-    void whenExceptionIsThrown() {
+    void whenException() {
         String[] args = {"-d=c:/", "-n=*|.?xt", "-t=mask", "-o=log.txt"};
         NewArgsName regEx = NewArgsName.of(args);
         assertThatThrownBy(() -> RegExSearch.validate(regEx))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Incorrect file name");
+                .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Incorrect file name");
     }
 }
