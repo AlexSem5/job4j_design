@@ -14,14 +14,14 @@ class RegExSearchTest {
     
     @Test
     void whenValidateIsTrue() {
-        String[] args = {"-d=c:/", "-n=*.?xt", "-t=mask", "-o=log.txt"};
+        String[] args = {"-d=C:\\projects", "-n=*.?xt", "-t=mask", "-o=log.txt"};
         NewArgsName regEx = NewArgsName.of(args);
         assertThat(RegExSearch.validate(regEx)).isTrue();
     }
     
     @Test
     void whenException() {
-        String[] args = {"-d=c:/", "-n=*|.?xt", "-t=mask", "-o=log.txt"};
+        String[] args = {"-d=C:\\projects", "-n=*|.?xt", "-t=mask", "-o=log.txt"};
         NewArgsName regEx = NewArgsName.of(args);
         assertThatThrownBy(() -> RegExSearch.validate(regEx))
                 .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Incorrect file name");
