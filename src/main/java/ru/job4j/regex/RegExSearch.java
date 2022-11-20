@@ -107,7 +107,7 @@ public class RegExSearch {
             throw new IllegalArgumentException("Incorrect file name");
         }
         String target = argsName.get("o");
-        if (!target.matches("^[\\w/:]+[.][0-9a-z_]+$")) {
+        if (!target.matches("^[\\w\\\\:]+[.][0-9a-z_]+$")) {
             throw new IllegalArgumentException(
                     String.format("incorrect target name: %s ", target));
         }
