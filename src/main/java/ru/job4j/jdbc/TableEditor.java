@@ -1,6 +1,5 @@
 package ru.job4j.jdbc;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -12,15 +11,12 @@ public class TableEditor implements AutoCloseable {
     
     private Properties properties;
     
-    public TableEditor(Properties properties) throws SQLException, IOException, ClassNotFoundException {
+    public TableEditor(Properties properties) throws SQLException, ClassNotFoundException {
         this.properties = properties;
         initConnection();
     }
     
-    private void initConnection() throws IOException, ClassNotFoundException, SQLException {
-        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
-            properties.load(in);
-        }
+    private void initConnection() throws ClassNotFoundException, SQLException {
         String url = properties.getProperty("url");
         String username = properties.getProperty("username");
         String password = properties.getProperty("password");
@@ -92,13 +88,20 @@ public class TableEditor implements AutoCloseable {
     }
     
     public static void main(String[] args) throws Exception {
-        try (TableEditor tableEditor = new TableEditor(new Properties())) {
+        Properties config = new Properties();
+        try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            config.load(in);
+        }
+        try (TableEditor tableEditor = new TableEditor(config)) {
             tableEditor.createTable("Contacts");
-            tableEditor.addColumn("Contacts", "Valera", "TEXT");
-            tableEditor.renameColumn("Contacts", "Valera", "Names");
-            tableEditor.dropColumn("Contacts", "Names");
-            tableEditor.dropTable("Contacts");
             System.out.println(tableEditor.getTableScheme("Contacts"));
+            tableEditor.addColumn("Contacts", "Valera", "TEXT");
+            System.out.println(tableEditor.getTableScheme("Contacts"));
+            tableEditor.renameColumn("Contacts", "Valera", "Names");
+            System.out.println(tableEditor.getTableScheme("Contacts"));
+            tableEditor.dropColumn("Contacts", "Names");
+            System.out.println(tableEditor.getTableScheme("Contacts"));
+            tableEditor.dropTable("Contacts");
         }
     }
     
