@@ -92,7 +92,10 @@ public class TableEditor implements AutoCloseable {
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
             config.load(in);
         }
+        /*Writing a try-with-resources statement:
+        Inside the parentheses, declare an object whose type implements Autocloseable*/
         try (TableEditor tableEditor = new TableEditor(config)) {
+            /*Use the object you declared inside the try block*/
             tableEditor.createTable("Contacts");
             System.out.println(tableEditor.getTableScheme("Contacts"));
             tableEditor.addColumn("Contacts", "Valera", "TEXT");
