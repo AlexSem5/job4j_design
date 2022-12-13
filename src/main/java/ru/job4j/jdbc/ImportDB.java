@@ -25,7 +25,7 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(s -> {
-                /*Alternative validation can be used with strings: validate(s)*/
+                /*Alternative validation can be made via validate(s) (see below)*/
                 String[] user = s.split(";", 2);
                 if (user.length != 2 || user[0].isBlank() || user[1].isBlank()) {
                     throw new IllegalArgumentException();
