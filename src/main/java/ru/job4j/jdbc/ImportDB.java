@@ -25,10 +25,13 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(s -> {
-                validate(s);
+                /*Alternative validation can be used with strings: validate(s)*/
                 String[] user = s.split(";", 2);
+                if (user.length != 2 || user[0].isBlank() || user[1].isBlank()) {
+                    throw new IllegalArgumentException();
+                }
                 users.add(new User(user[0], user[1]));
-            /*Alternative solution
+            /*Alternative solution with lambda:
               rd.lines()
                 .validate(s)
                 .map(s -> new User(s.split(";",2)[0], s.split(";",2)[1]))
@@ -38,12 +41,13 @@ public class ImportDB {
         return users;
     }
     
+    /*Alternative solution to be used with strings:
     private static void validate(String arg) {
         if (!arg.contains(";") || arg.startsWith(";")
             || arg.endsWith(";") && arg.indexOf(";") == arg.length() - 1) {
             throw new IllegalArgumentException();
         }
-    }
+    }*/
     
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
         Class.forName(cfg.getProperty("jdbc.driver"));
