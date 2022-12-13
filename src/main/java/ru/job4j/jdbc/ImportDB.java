@@ -25,11 +25,24 @@ public class ImportDB {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(s -> {
+                validate(s);
                 String[] user = s.split(";", 2);
                 users.add(new User(user[0], user[1]));
+            /*Alternative solution
+              rd.lines()
+                .validate(s)
+                .map(s -> new User(s.split(";",2)[0], s.split(";",2)[1]))
+                .forEach(users::add);*/
             });
         }
         return users;
+    }
+    
+    private static void validate(String arg) {
+        if (!arg.contains(";") || arg.startsWith(";")
+            || arg.endsWith(";") && arg.indexOf(";") == arg.length() - 1) {
+            throw new IllegalArgumentException();
+        }
     }
     
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
