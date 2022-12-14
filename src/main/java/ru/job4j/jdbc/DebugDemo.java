@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DebugDemo {
+public class DebugDemo implements AutoCloseable {
     private Connection con;
     
     public DebugDemo() throws Exception {
@@ -66,12 +66,23 @@ public class DebugDemo {
     public static void main(String[] args) throws Exception {
         City first = new City("CityOne", 100);
         City second = new City("CityTwo", 200);
-        DebugDemo debugDemo = new DebugDemo();
-        debugDemo.createTable();
-        debugDemo.insert(first);
-        debugDemo.insert(second);
-        for (City city : debugDemo.findAll()) {
-            System.out.println("city = " + city);
+        try (DebugDemo debugDemo = new DebugDemo()) {
+            debugDemo.createTable();
+            debugDemo.insert(first);
+            debugDemo.insert(second);
+            for (City city : debugDemo.findAll()) {
+                System.out.println("city = " + city);
+            }
+        }
+    }
+    
+    /**
+     * @throws Exception 
+     */
+    @Override
+    public void close() throws Exception {
+        if (con != null) {
+            con.close();
         }
     }
 }
