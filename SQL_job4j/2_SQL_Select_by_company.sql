@@ -55,13 +55,11 @@ HAVING COUNT(P.id) = (SELECT MAX(alias)
 /*Second solution*/
 SELECT C.name company_name, COUNT(P.id) people_count
 FROM company C
-         NATURAL JOIN person P
-GROUP BY c.name
-HAVING COUNT(P.id) = (SELECT COUNT(P.id)
-                      FROM company C
-                               NATURAL JOIN person P
-                      GROUP BY C.name
-                      ORDER BY COUNT(P.id) DESC
+         INNER JOIN person P ON C.id = P.company_id
+GROUP BY C.name
+HAVING COUNT(P.id) = (SELECT COUNT(company_id)
+                      FROM person
+                      GROUP BY company_id
+                      ORDER BY COUNT(company_id) DESC
                       LIMIT 1);
-
 
